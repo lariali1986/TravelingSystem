@@ -8,6 +8,10 @@ export default function AppContentProvider(props) {
   const [customerList, setCustomerList] = useState([]);
   const [report, setReport] = useState([]);
   const [bookingList, setBookingList] = useState([]);
+<<<<<<< HEAD
+=======
+  const [token, setToken] = useState();
+>>>>>>> 1aece17de39255c238a1ceb91c91491a667534c0
 
   const updateData = (newData) => {
     setData([...data, ...newData]);
@@ -30,16 +34,30 @@ export default function AppContentProvider(props) {
   };
 
   const updateBookingList = (bookingList) => {
+<<<<<<< HEAD
     setBookingList(bookingList)
     
     
+=======
+    setBookingList(bookingList);
+  }
+    
+  const setAuthToken = (token) => {
+      setToken(token);
+  }
+>>>>>>> 1aece17de39255c238a1ceb91c91491a667534c0
 
 //const objectIdToRemove = 2;
 
 //const index = array.findIndex(obj => obj.id === objectIdToRemove);
 //if (index > -1) {
   //array.splice(index, 1);
+<<<<<<< HEAD
 };
+=======
+
+  
+>>>>>>> 1aece17de39255c238a1ceb91c91491a667534c0
 
 
   
@@ -50,6 +68,11 @@ export default function AppContentProvider(props) {
     customerList: customerList,
     report: report,
     bookingList: bookingList,
+<<<<<<< HEAD
+=======
+    token: token, 
+    isAuthenticated: !!token,
+>>>>>>> 1aece17de39255c238a1ceb91c91491a667534c0
   };
 
   const setFcn = {
@@ -59,6 +82,10 @@ export default function AppContentProvider(props) {
     updateReport: updateReport,
     bookingListAdd: bookingListAdd,
     updateBookingList: updateBookingList,
+<<<<<<< HEAD
+=======
+    setAuthToken: setAuthToken,
+>>>>>>> 1aece17de39255c238a1ceb91c91491a667534c0
   };
 
   const value = {
