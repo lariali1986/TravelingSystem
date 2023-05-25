@@ -10,8 +10,13 @@ class TravelPackage {
     this.destinationCountry = '';
     this.numberOfDays = 0;
     this.numberOfNights = 0;
+    this.hotelName = '';
+    this.price = '';
+    this.activities = '';
   }
-
+  setPackageId(packageId) {
+    this.packageId = packageId;
+  }
   setDestinationCity(city) {
     this.destinationCity = city;
   }
@@ -27,6 +32,18 @@ class TravelPackage {
   setNumberOfNights(nights) {
     this.numberOfNights = nights;
   }
+
+  setHotelName(hotelName) {
+    this.hotelName = hotelName;
+  }
+
+  setPrice(price) {
+    this.price = price;
+  }
+
+  setActivities(activities) {
+    this.activities = activities;
+  }
 }
 
 const predefinedPackages = require('../data/predefined_packages.json');
@@ -35,6 +52,11 @@ const PackageScreen = () => {
   const newTravelPackage = new TravelPackage();
   const [travelPackage, setTravelPackage] = useState(newTravelPackage);
   const { setFcn, storedInfo } = useContext(AppContent);
+
+  const handlePackageIdChange = (packageId) => {
+    newTravelPackage.setPackageId(packageId);
+    setTravelPackage(newTravelPackage);
+  };
 
   const handleDestinationCityChange = (city) => {
     newTravelPackage.setDestinationCity(city);
@@ -56,39 +78,49 @@ const PackageScreen = () => {
     setTravelPackage(newTravelPackage);
   };
 
-  const packInfo = () => {
-    return [
-      {
-        id: travelPackage.id,
-        destinationCity: travelPackage.destinationCity,
-        destinationCity: travelPackage.destinationCountry,
-        numberOfDays: travelPackage.numberOfDays,
-        numberOfNights: travelPackage.numberOfNights,
-      },
-    ];
+  const handleHotelNameChange = (hotelName) => {
+    newTravelPackage.setHotelName(hotelName);
+    setTravelPackage(newTravelPackage);
   };
-  //       , hotelName: travelPackage.hotelName,
-  //         price: travelPackage.price}]
-  // }
+
+  const handlePriceChange = (price) => {
+    newTravelPackage.setPrice(parseInt(price));
+    setTravelPackage(newTravelPackage);
+  };
+
+  const handleActivitiesChange = (activities) => {
+    newTravelPackage.setActivities(activities);
+    setTravelPackage(newTravelPackage);
+  };
 
   const handleSubmit = () => {
     //setTravelPackage(travelPackage)
-    console.log(travelPackage);
-    console.log('this is travel package' + packInfo(travelPackage));
-    console.log(storedInfo.data);
-    setFcn.updateData([
-      { destinationCity: travelPackage.destinationCity, destinationCountry: travelPackage.destinationCountry,
-        numberOfDays: travelPackage.numberOfDays,  numberOfNights: travelPackage.numberOfNights
 
+    setFcn.updateData([
+      {
+        packageId: travelPackage.packageId,
+        destinationCity: travelPackage.destinationCity,
+        destinationCountry: travelPackage.destinationCountry,
+        numberOfDays: travelPackage.numberOfDays,
+        numberOfNights: travelPackage.numberOfNights,
+        hotelName: travelPackage.hotelName,
+        price: travelPackage.price,
+        activities: travelPackage.activities,
       },
     ]);
-  setTravelPackage=new TravelPackage();
-  newTravelPackage=new TravelPackage();
+    console.log('this is the list for pakagessssss ' + storedInfo.data);
     //navigation.navigate('Agent');
   };
 
   return (
     <View style={styles.container}>
+      <TextInput
+        editable={true}
+        style={styles.input}
+        placeholder="Package Id"
+        onChangeText={handlePackageIdChange}
+      />
+
       <TextInput
         editable={true}
         style={styles.input}
@@ -115,6 +147,26 @@ const PackageScreen = () => {
         onChangeText={handleNumberOfNightsChange}
         keyboardType="numeric"
       />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Hotel Name"
+        onChangeText={handleHotelNameChange}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Price"
+        onChangeText={handlePriceChange}
+        keyboardType="numeric"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Activities"
+        onChangeText={handleActivitiesChange}
+      />
+
       <Button title="Submit" onPress={handleSubmit} />
     </View>
   );

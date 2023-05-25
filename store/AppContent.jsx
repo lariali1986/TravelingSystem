@@ -6,7 +6,8 @@ export default function AppContentProvider(props) {
   const predefinedPackages = require('../data/predefined_packages.json');
   const [data, setData] = useState(predefinedPackages);
   const [customerList, setCustomerList] = useState([]);
-  const [BookingList, setBookingList] = useState([]);
+  const [report, setReport] = useState([]);
+  const [bookingList, setBookingList] = useState([]);
 
   const updateData = (newData) => {
     setData([...data, ...newData]);
@@ -16,14 +17,48 @@ export default function AppContentProvider(props) {
     setCustomerList([...customerList, ...newCustomer]);
   };
 
+  const addReport = (newReport) => {
+    setReport([...report, ...newReport]);
+  };
+
+  const updateReport = (report) => {
+    setReport(report);
+  };
+
+  const bookingListAdd = (newBooking) => {
+    setBookingList([...bookingList, ...newBooking]);
+  };
+
+  const updateBookingList = (bookingList) => {
+    setBookingList(bookingList)
+    
+    
+
+//const objectIdToRemove = 2;
+
+//const index = array.findIndex(obj => obj.id === objectIdToRemove);
+//if (index > -1) {
+  //array.splice(index, 1);
+};
+
+
+  
+
+
   const storedInfo = {
     data: data,
     customerList: customerList,
+    report: report,
+    bookingList: bookingList,
   };
 
   const setFcn = {
     updateData: updateData,
     updateCustomerList: updateCustomerList,
+    addReport: addReport,
+    updateReport: updateReport,
+    bookingListAdd: bookingListAdd,
+    updateBookingList: updateBookingList,
   };
 
   const value = {

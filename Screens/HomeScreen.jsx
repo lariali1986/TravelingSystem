@@ -7,7 +7,7 @@ export default function HomeScreen({navigation}){
       <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Agent')}>
         <Text style={styles.buttonText}>Agent</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Customer')}>
+      <TouchableOpacity style={styles.button} onPress={()=>alert('Not Active, Reserved for the main Project')}>
         <Text style={styles.buttonText}>Customer</Text>
       </TouchableOpacity>
     </View>

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { AppContent } from '../store/AppContent';
+import { useNavigation } from '@react-navigation/native';
 
 class Customer {
   constructor() {
@@ -10,8 +11,8 @@ class Customer {
     this.dateOfBirth = '';
     this.email = '';
   }
-  setId(id) {
-    this.customerId = id;
+  setId(customerId) {
+    this.customerId = customerId;
   }
   setName(name) {
     this.name = name;
@@ -21,8 +22,8 @@ class Customer {
     this.lastName = lastName;
   }
 
-  setDateOfBirth(birthDate) {
-    this.dateOfBirth = birthDate;
+  setDateOfBirth(dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
   }
 
   setEmail(email) {
@@ -31,9 +32,15 @@ class Customer {
 }
 
 const CustomerScreen = () => {
+  const navigation = useNavigation();
   const { setFcn, storedInfo } = useContext(AppContent);
   const newCustomer = new Customer();
   const [customer, setCustomer] = useState(newCustomer);
+
+  const handleCustomerIdChange = (customerId) => {
+    newCustomer.setId(customerId);
+    setCustomer(newCustomer);
+  };
 
   const handleNameChange = (name) => {
     newCustomer.setName(name);
@@ -45,8 +52,8 @@ const CustomerScreen = () => {
     setCustomer(newCustomer);
   };
 
-  const handleDateOfBirthChange = (birthDate) => {
-    newCustomer.setDateOfBirth(birthDate);
+  const handleDateOfBirthChange = (dateOfBirth) => {
+    newCustomer.setDateOfBirth(dateOfBirth);
     setCustomer(newCustomer);
   };
 
@@ -56,11 +63,29 @@ const CustomerScreen = () => {
   };
 
   const handleSubmit = () => {
-    setFcn.updateCustomerList([{ name: newCustomer.name}]);
+    //setFcn.updateCustomerList([{ name: "aliw" }]);
+    console.log('the name is ' + customer.dateOfBirth);
+    console.log(
+      'this is the list for customersssss ' + storedInfo.customerList
+    );
+    setFcn.updateCustomerList([
+      {
+        customerId:customer.customerId,
+        name: customer.name,
+        lastName: customer.lastName,
+        dateOfBirth: customer.dateOfBirth,
+        email: customer.email,
+      },
+    ]);
   };
 
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Customer Id"
+        onChangeText={handleCustomerIdChange}
+      />
       <TextInput
         style={styles.input}
         placeholder="Name"

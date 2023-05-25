@@ -2,69 +2,101 @@ import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import PackageCardGroup from '../Components/PackageCardGroup';
 import { AppContent } from '../store/AppContent';
-import PackageScreen from './PackageScreen';
-import CustomerScreen from './CustomerScreen';
-//import predefined_packages from '../data/predefined_packages.json';
-//import { writeFile } from 'react-native-fs';
-//import { writeFile } from 'react-native-fs';
+import PackageScreen from '../Components/PackageScreen';
+import CustomerScreen from '../Components/CustomerScreen';
+import BookingListScreen from '../Components/BookingScreen';
+import CustomerCardGroup from '../Components/CustomerCardGroup';
+import GenerateReport from '../Components/GenerateReport';
+import { useNavigation } from '@react-navigation/native';
+import ModifyBookingScreen from './ModifyBookingScreen';
 
-/*
-const data = {
-  name: 'John Doe',
-  age: 30,
-  email: 'johndoe@example.com'
-};
-
-writeFile('../data/predefined_packages.json', JSON.stringify(data), 'utf8', (err) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('Data written to file');
+class TravellingSystem {
+  generateReport() {
+    return 'Generate Report';
   }
-});
-
-*/
-
-//const BUTTONS = [{ label: 'Package List', items: ['Country: Canada  City:Montreal', 'Item 1.2', 'Item 1.3'] }];
+  showBookingList() {
+    return 'Booking List';
+  }
+  createPackage() {
+    return 'Create Package';
+  }
+  showCustomerList() {
+    return 'Customer List';
+  }
+  createCustomer() {
+    return 'Create Customer';
+  }
+  showPackageList() {
+    return 'Package List';
+  }
+  editBooking() {
+    return 'Modify Booking List';
+  }
+}
 
 const BUTTONS = [
   { label: 'Package List' },
   { label: 'Create Package' },
   { label: 'Create Customer' },
+  { label: 'Customer List' },
+  { label: 'Generate Report' },
+  { label: 'Booking List' },
+  { label: 'Modify Booking List' },
 ];
 
-//const image1 = require('../assets/icon.png');
-
 const predefinedPackages = require('../data/predefined_packages.json');
-//const fs = require('fs')
-//fs.readFile()
 
-export default function AgentScreen({ navigation }) {
+export default function AgentScreen() {
+  const newTravellingSystem = new TravellingSystem();
   const [activeButton, setActiveButton] = useState('Package List');
   const { setFcn, storedInfo } = useContext(AppContent);
+  const navigation = useNavigation();
   console.log(storedInfo.data);
 
   console.log('i am in the agent');
 
   const [packages, setPackages] = useState(predefinedPackages);
+  const [customerList, setCustomerList] = useState();
+  const [report, setReport] = useState();
+  const [bookingList, setBookingList] = useState(storedInfo.bookingList);
 
   const handleButtonPress = (button) => {
-    setActiveButton(button);
+    let activeBtn = '';
     switch (button) {
       case 'Create Package':
-        //navigation.navigate('Package');
-        setActiveButton('Create Package');
+        activeBtn = newTravellingSystem.createPackage();
+        setActiveButton(activeBtn);
         break;
       case 'Package List':
-        setActiveButton('Package List');
+        activeBtn = newTravellingSystem.showPackageList();
+        setActiveButton(activeBtn);
         setPackages(storedInfo.data);
-        //navigation.navigate('Agent');
         break;
       case 'Create Customer':
+        activeBtn = newTravellingSystem.createCustomer();
         setActiveButton('Create Customer');
-        setPackages(storedInfo.customerList);
-        console.log("customers: "+storedInfo.customerList)
-        //navigation.navigate('Agent');
+        setCustomerList(storedInfo.customerList);
+        break;
+      case 'Customer List':
+        setCustomerList(storedInfo.customerList);
+        activeBtn = newTravellingSystem.showCustomerList();
+        setActiveButton(activeBtn);
+        break;
+      case 'Generate Report':
+        activeBtn = newTravellingSystem.generateReport();
+        setActiveButton(activeBtn);
+        setReport(storedInfo.report);
+        break;
+      case 'Booking List':
+        activeBtn = newTravellingSystem.showBookingList();
+        setActiveButton(activeBtn);
+        navigation.navigate(activeBtn);
+        break;
+      case 'Modify Booking List':
+        activeBtn = newTravellingSystem.editBooking();
+        setActiveButton(activeBtn);
+        navigation.navigate('Modify Booking');
+        setActiveButton('Package List');
         break;
     }
   };
@@ -93,6 +125,13 @@ export default function AgentScreen({ navigation }) {
         )}
         {activeButton == 'Create Package' && <PackageScreen />}
         {activeButton == 'Create Customer' && <CustomerScreen />}
+        {activeButton == 'Customer List' && (
+          <CustomerCardGroup data={customerList} style={styles.item} />
+        )}
+        {activeButton == 'Generate Report' && <GenerateReport data={report} />}
+        {activeButton == 'Booking List' && (
+          <PackageCardGroup data={packages} style={styles.item} />
+        )}
       </View>
     </View>
   );

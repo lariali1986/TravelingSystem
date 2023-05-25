@@ -1,11 +1,38 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
+import { AppContent } from '../store/AppContent';
 
 export default function PackageCard({ item }) {
   const navigation = useNavigation();
-  function pressHandler(packId) {
-    navigation.navigate('Booking', { id: packId });
+  const { storedInfo, setFcn } = useContext(AppContent);
+
+  function pressHandler(item) {
+    let report = storedInfo.report;
+
+    const objectToUpdate = report.find(
+      (obj) => obj.packageId === item.packageId
+    );
+    console.log('this is the package id' + item.packageId);
+
+    if (objectToUpdate) {
+      console.log('I am here and the object exists');
+      console.log('this is object to updateId' + objectToUpdate.packageId);
+      // Update the value of the property
+      objectToUpdate.numOfBooking += 1;
+      setFcn.updateReport(report);
+
+    } else {
+      console.log('I am here and the object doesnot exist');
+
+      setFcn.addReport([
+        { packageId: item.packageId, price: item.price, numOfBooking: 1 },
+      ]);
+    }
+
+    console.log(item.destinationCity);
+    navigation.navigate('Booking', { id: item.packageId });
   }
 
   return (
@@ -15,15 +42,17 @@ export default function PackageCard({ item }) {
         style={styles.image}
       />
       <View style={styles.textContainer}>
+        <Text style={styles.country}>{item.packageId}</Text>
         <Text style={styles.country}>{item.destinationCountry}</Text>
         <Text style={styles.city}>{item.destinationCity}</Text>
         <Text style={styles.city}>{item.numberOfDays + ' Days'}</Text>
         <Text style={styles.city}>{item.numberOfNights + ' Nights'}</Text>
         <Text style={styles.city}>{'Hotel ' + item.hotelName}</Text>
         <Text style={styles.city}>{item.price + ' $'}</Text>
+        <Text style={styles.city}>{'Activities: ' + item.activities}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => pressHandler(item.id)}
+          onPress={() => pressHandler(item)}
         >
           <Text style={styles.buttonText}>Book Now</Text>
         </TouchableOpacity>

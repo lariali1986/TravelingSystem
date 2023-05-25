@@ -2,11 +2,13 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './Screens/HomeScreen';
-import CustomerScreen from './Screens/CustomerScreen';
-import PackageScreen from './Screens/PackageScreen';
+import CustomerScreen from './Components/CustomerScreen';
+import PackageScreen from './Components/PackageScreen';
 import AgentScreen from './Screens/AgentScreen';
-import BookingScreen from './Screens/BookingScreen';
+import BookingScreen from './Components/BookingScreen';
 import AppContentProvider from './store/AppContent';
+import BookingListScreen from './Screens/BookingListScreen';
+import ModifyBookingScreen from './Screens/ModifyBookingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +43,18 @@ export default function App() {
             name="Booking"
             component={BookingScreen}
             options={{ title: 'Final Booking' }}
+          />
+
+          <Stack.Screen
+            name="Modify Booking"
+            component={ModifyBookingScreen}
+            options={{ title: 'Modify Booking' }}
+          />
+
+          <Stack.Screen
+            name="Booking List"
+            component={BookingListScreen}
+            options={{ title: 'Booking List' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
