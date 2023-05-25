@@ -15,17 +15,11 @@
     "expo": "~48.0.15",
     "expo-status-bar": "~1.4.4",
     "install": "^0.13.0",
-<<<<<<< HEAD
-=======
-    "jwt-decode": "^3.1.2",
->>>>>>> 1aece17de39255c238a1ceb91c91491a667534c0
     "native-base": "^3.4.28",
     "npx": "^10.2.2",
     "react": "18.2.0",
     "react-native": "0.71.7",
     "react-native-fs": "^2.20.0",
-    "react-native-safe-area-context": "^3.3.2",
-    "react-native-svg": "^12.1.1",
     "react-native-web": "^0.18.12"
   },
   "devDependencies": {
