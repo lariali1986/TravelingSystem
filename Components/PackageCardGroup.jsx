@@ -12,7 +12,7 @@ export default function PackageCardGroup({ data }) {
     <FlatList
       data={data}
       keyExtractor={(item) => item.id}
-      numColumns={1}
+      numColumns={2}
       renderItem={({ item }) => (
         <PackageCard
           item={item}
